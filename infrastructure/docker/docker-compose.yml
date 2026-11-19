@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: teamflow-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: teamflow_user
+      POSTGRES_PASSWORD: teamflow_dev_password
+      POSTGRES_DB: teamflow_db
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - teamflow_postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U teamflow_user -d teamflow_db
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  teamflow_postgres_data:
