@@ -7,6 +7,8 @@ import healthRouter from "./modules/health/health.route.js";
 import { notFoundMiddleware } from "./common/middlewares/not-found.middleware.js";
 import { errorMiddleware } from "./common/middlewares/error.middleware.js";
 
+import organizationsRouter from "./modules/organization/organization.route.js";
+
 const app = express();
 app.use(helmet());
 app.use(cors({ origin: env.FRONTEND_URL, credentials: true }));
@@ -16,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // api routes )
 app.use("/api/v1/health", healthRouter);
+app.use("/api/v1/organizations", organizationsRouter);
 
 // handle unknown routus
 app.use(notFoundMiddleware);
