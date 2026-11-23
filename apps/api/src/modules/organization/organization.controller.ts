@@ -39,7 +39,7 @@ export const organizationController = {
   }, // end creaeOrganization
 
   // get organization controller
-  async getOrganization(_req: Request, res: Response, next: NextFunction) {
+  async getOrganizations(_req: Request, res: Response, next: NextFunction) {
     try {
       const organizations = await organizationService.getOrganizations();
 
@@ -51,7 +51,7 @@ export const organizationController = {
     } catch (error) {
       next(error);
     }
-  }, //end getOrganization
+  }, // end getOrganizations
 
   // get Organization by id
   async getOrganizationById(req: Request, res: Response, next: NextFunction) {
@@ -69,22 +69,13 @@ export const organizationController = {
         });
 
         return;
-      }
+      } // end if statement
 
       const organization = await organizationService.getOrganizationById(
         validationResult.data.id,
       );
 
-      if (!organization) {
-        res.status(404).json({
-          success: false,
-          message: "Organization not found",
-        });
-
-        return;
-      }
-
-      res.status(201).json({
+      res.status(200).json({
         success: true,
         message: "Organization retrieved successfully",
         data: organization,
